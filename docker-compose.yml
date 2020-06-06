@@ -5,3 +5,9 @@ services:
     build: src
     ports:
     - 127.0.0.1:2222:2222
+    - 127.0.0.1:4444:4444
+    environment:
+    - AUTHORIZED_KEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDFc+7/PfWJzFH+5q/526w1rJHLeyGlBJb5KZc9iyuPV3MfV5VxX9x3r7kaqmuZ+fJu7t4VqrqB0LWM8z5nqdsWhBXXqTL4RrSTVWI4pgWUr41z8osevv8ZOz2+V7NenrLP+a0imfHsIUKKRMindw5Xpegd7GWlOYpxHihTVzY3fChAR+rexpaiB1HP7JBvA5nUN3DN0kbolbOVVQKdIqWxu2UU/GSsR5Ed1T0iK2yzsF89L8+FADOgcM+dF9sU887L8DhUOyZnJGkKOhkRs23tecK3qvkw9Yx2D4LeHcIh9OQ3KsNdBF4WxVCBIb2k+cMsNVvmFj213ioC6JcvoF3H test-key
+
+
+

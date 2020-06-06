@@ -1,0 +1,30 @@
+{
+  "name": "docker-image-selenium-sshd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/containerize-my-server/docker-image-selenium-sshd.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/containerize-my-server/docker-image-selenium-sshd/issues"
+  },
+  "homepage": "https://github.com/containerize-my-server/docker-image-selenium-sshd#readme",
+  "devDependencies": {
+    "express": "^4.17.1",
+    "fs-extra": "^9.0.1",
+    "jest": "^26.0.1",
+    "jest-image-snapshot": "^4.0.2",
+    "reverse-tunnel-ssh": "^1.1.0",
+    "selenium-webdriver": "^4.0.0-alpha.7"
+  }
+}

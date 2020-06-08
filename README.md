@@ -29,6 +29,7 @@ SEND_ANONYMOUS_USAGE_INFO=false
 
 in the environment
 
-## The tunnel
+## The reverse tunnel
 
-Ths tunnel is implemented
+Ths reverse tunnel is implemented using [chisel](https://github.com/jpillora/chisel). For usage-examples,
+have a look at the "test"-folder.

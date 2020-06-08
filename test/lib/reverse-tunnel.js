@@ -1,34 +1,22 @@
-var tunnel = require('reverse-tunnel-ssh');
+const chisel = require.resolve('./chisel_1.5.2_linux_amd64')
+const ChildService = require('child-service')
+const debug = require('debug')('tunnel-test:tunnel')
+
+const chiselService = new ChildService({
+  command: chisel,
+  args: ['client', 'localhost:2222', 'R:8000:localhost:8000'],
+  readyRegex: / Connected /,
+})
 
 module.exports = {
   async createTunnel() {
-    return new Promise((resolve,reject) => {
-      const connection = tunnel({
-        host: 'localhost',
-        username: 'seluser',
-        port: 2222,
-        privateKey: require('fs').readFileSync(require.resolve('../ssh/id_rsa')),
-        dstHost: '0.0.0.0',
-        dstPort: 8000,
-        // srcHost: '127.0.0.1',
-        // srcPort: 8000,
-        debug: msg => {
-          console.log(msg)
-        }
-      }, function(error, clientConnection) {
-        if (error != null) {
-          return reject(error)
-        }
-      })
-      connection.on('forward-in', function (port) {
-        return resolve(connection)
-      });
-    })
+    debug("Creating tunnel")
+    await chiselService.start()
+    debug("Tunnel created")
   },
-  async closeTunnel(connection) {
-    console.log(connection)
-    await connection.end()
+  async closeTunnel() {
+    debug("Closing tunnel")
+    await chiselService.stop()
+    debug("Tunnel closed")
   }
 }
-
-;

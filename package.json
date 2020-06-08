@@ -1,5 +1,5 @@
 {
-  "name": "docker-image-selenium-sshd",
+  "name": "docker-image-selenium-with-tunnel",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,20 +11,25 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/containerize-my-server/docker-image-selenium-sshd.git"
+    "url": "git+https://github.com/containerize-my-server/docker-image-selenium-with-tunnel.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/containerize-my-server/docker-image-selenium-sshd/issues"
+    "url": "https://github.com/containerize-my-server/docker-image-selenium-with-tunnel/issues"
   },
-  "homepage": "https://github.com/containerize-my-server/docker-image-selenium-sshd#readme",
+  "homepage": "https://github.com/containerize-my-server/docker-image-selenium-with-tunnel#readme",
   "devDependencies": {
+    "child-service": "^1.0.0",
     "express": "^4.17.1",
     "fs-extra": "^9.0.1",
     "jest": "^26.0.1",
     "jest-image-snapshot": "^4.0.2",
     "reverse-tunnel-ssh": "^1.1.0",
     "selenium-webdriver": "^4.0.0-alpha.7"
+  },
+  "dependencies": {
+    "async-child-process": "^1.1.1",
+    "execa": "^4.0.2"
   }
 }

@@ -1,51 +1,51 @@
 const webdriver = require('selenium-webdriver')
 const fs = require("fs-extra")
-const express = require('express')
-const http = require('http')
 
-const app = express();
-app.use(express.static('test/public'));
+
+const reverseTunnel = require('./lib/reverse-tunnel')
+const server = require('./lib/web-server')
+const debug = require('debug')('tunnel-test:test')
+
 
 describe("the tunnel", () => {
-  let server;
-  beforeAll(async() => {
-    server = http.createServer(app).listen(8000)
-    return new Promise(((resolve, reject) => {
-      server.on('listening', () => resolve())
-      server.on('error', err => reject(err))
-    }))
-  })
+  let driver;
 
-  afterAll(async () => {
-    return new Promise((resolve, reject) => {
-      server.close(err => {
-        if (err != null) {
-          return reject(err)
-        }
-        return resolve()
-      })
-    })
-  })
+  beforeAll(async () => {
+    await server.start()
+    await reverseTunnel.createTunnel();
 
-  it("should work", async () => {
-    let driver = new webdriver.Builder()
-        .forBrowser('firefox')
+    driver = new webdriver.Builder()
+        .forBrowser('chrome')
         .usingServer('http://localhost:4444/wd/hub')
         .build();
-    try {
-      await driver.get('http://localhost:8000/test.html')
-      const screenshot = await driver.takeScreenshot();
-      await fs.writeFile('out.png', screenshot, 'base64')
-    } finally {
-      await driver.quit();
-    }
+
+    debug("starting warmup")
+    await driver.get('http://localhost:8000/test.html')
+    debug("warmup done")
+  }, 10000)
+
+  afterAll(async () => {
+    await Promise.all([
+      driver.quit(),
+      reverseTunnel.closeTunnel(),
+      server.stop()
+    ])
   })
+
+  for (let i = 0; i < 10; i++) {
+    it("should work fast" + i, async () => {
+      debug("running test")
+      try {
+        await driver.get('http://localhost:8000/test.html')
+        debug("page loaded")
+        const screenshot = await driver.takeScreenshot();
+        debug("screenshot taken")
+        await fs.writeFile('out.png', screenshot, 'base64')
+        debug("screenshot written")
+      } finally {
+
+      }
+    })
+
+  }
 })
-
-
-async function writeBase64File() {
-  require("fs-extra").writeFile("out.png", screenshot, 'base64', function (err) {
-    console.log(err);
-  });
-
-}
